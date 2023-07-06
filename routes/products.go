@@ -14,7 +14,7 @@ type ProductSerializer struct {
 	SerialNumber string `json:"serial_number"`
 }
 
-func createProductResponse(productModel models.Product) ProductSerializer {
+func CreateProductResponse(productModel models.Product) ProductSerializer {
 	return ProductSerializer{ID: productModel.ID, Name: productModel.Name, SerialNumber: productModel.SerialNumber}
 }
 
@@ -26,7 +26,7 @@ func CreateProduct(c *fiber.Ctx) error {
 	}
 
 	database.Database.Db.Create(&product)
-	responseProduct := createProductResponse(product)
+	responseProduct := CreateProductResponse(product)
 
 	return c.Status(200).JSON(responseProduct)
 }
@@ -51,7 +51,7 @@ func GetProduct(c *fiber.Ctx) error {
 		return c.Status(400).JSON(err.Error())
 	}
 
-	responseProduct := createProductResponse(product)
+	responseProduct := CreateProductResponse(product)
 	return c.Status(200).JSON(responseProduct)
 }
 
@@ -61,7 +61,7 @@ func GetProducts(c *fiber.Ctx) error {
 	responseProducts := []ProductSerializer{}
 
 	for _, product := range products {
-		responseProduct := createProductResponse(product)
+		responseProduct := CreateProductResponse(product)
 		responseProducts = append(responseProducts, responseProduct)
 	}
 
@@ -94,7 +94,7 @@ func UpdateProduct(c *fiber.Ctx) error {
 	product.Name = updateData.Name
 	database.Database.Db.Save(&product)
 
-	productResponse := createProductResponse(product)
+	productResponse := CreateProductResponse(product)
 	return c.Status(200).JSON(productResponse)
 }
 
