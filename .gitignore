@@ -1,3 +1,6 @@
 # Ignore db files
 *.db
 */*.db
+
+# Ignore temporary dir
+tmp/
